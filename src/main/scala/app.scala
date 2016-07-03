@@ -4,18 +4,17 @@
 
 package com.nico
 
-import com.nico.persistence
-import com.nico.persistence.{Account, AccountStorage}
+import com.nico.persistence._
 
-object app {
-  def main(args: Array[String]) {
-
-    val storage = AccountStorage("/Users/anicolaspp/accounts").accountStorage
-
-    val account = storage.get("1")
-
-    val updated = storage.update(Account("1", 500))
-
-    println(account)
-  }
-}
+//object app {
+//  def main(args: Array[String]) {
+//
+//    val storage = PHAccountStorage("/Users/anicolaspp/accounts").accountStorage
+//
+//    val account = storage.get("1")
+//
+//    val updated = storage.update(Account("1", 500))
+//
+//    println(account)
+//  }
+//}
