@@ -5,9 +5,13 @@
 package com.nico.simulation.actors
 
 import akka.actor._
+import akka.cluster.pubsub.DistributedPubSub
+import akka.cluster.pubsub.DistributedPubSubMediator.Subscribe
+import akka.cluster.singleton.{ClusterSingletonManagerSettings, ClusterSingletonManager}
 import com.nico.actors.TransactionManagerActor
 import com.nico.actors.TransactionManagerActor._
 import com.nico.simulation.actors.Driver.Start
+import com.typesafe.config.ConfigFactory
 import org.joda.time.{DateTime, Period, PeriodType}
 
 import scala.concurrent.duration._
