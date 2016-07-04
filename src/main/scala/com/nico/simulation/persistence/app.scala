@@ -2,9 +2,10 @@
   * Created by anicolaspp on 7/2/16.
   */
 
-package com.nico.simulation
+package com.nico.simulation.persistence
 
 import com.nico.persistence._
+
 import scala.util.Random
 
 object app {
