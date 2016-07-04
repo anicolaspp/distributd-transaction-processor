@@ -17,10 +17,11 @@ object SingleAccountSimulator {
   def main(args: Array[String]) {
     val actorySystem = ActorSystem("simulator")
 
+    val numberOfTransactions = args(0).toInt
     val accId = Random.nextInt(100).toString
     val manager = actorySystem.actorOf(TransactionManagerActor.props(accId))
 
-    val driver = actorySystem.actorOf(Driver.props(manager), "driver")
+    val driver = actorySystem.actorOf(Driver.props(manager, numberOfTransactions), "driver")
 
 
     driver ! Start()
@@ -29,7 +30,7 @@ object SingleAccountSimulator {
   }
 }
 
-class Driver(manager: ActorRef) extends Actor {
+class Driver(manager: ActorRef, n: Int) extends Actor {
 
   var started = false
   var time = DateTime.now()
@@ -61,7 +62,7 @@ class Driver(manager: ActorRef) extends Actor {
     case AccountInfoResult(acc)   =>   {
       count = count + 1
 
-      if (count == 10000) {
+      if (count == n) {
         schedule.cancel()
 
         val p = new Period(time, DateTime.now(), PeriodType.millis());
@@ -73,7 +74,7 @@ class Driver(manager: ActorRef) extends Actor {
     case ExtractResult(_,_) =>  {
       count = count + 1
 
-      if (count == 10000) {
+      if (count == n) {
         schedule.cancel()
 
         val p = new Period(time, DateTime.now(), PeriodType.millis());
@@ -86,7 +87,7 @@ class Driver(manager: ActorRef) extends Actor {
 }
 
 object Driver {
-  def props(manager: ActorRef): Props = Props(new Driver(manager))
+  def props(manager: ActorRef, numberOfTransactions: Int): Props = Props(new Driver(manager, numberOfTransactions))
 
   case class Start()
 }
