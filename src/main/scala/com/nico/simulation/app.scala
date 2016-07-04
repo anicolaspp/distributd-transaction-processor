@@ -15,6 +15,8 @@ object app {
 
     val manager = new TransactionManager(accId) with AccountStorage
 
+
+
     (0 to numerberOfIterations).foreach{ _ =>
       val transactionAmount = Random.nextInt() % 100
 
