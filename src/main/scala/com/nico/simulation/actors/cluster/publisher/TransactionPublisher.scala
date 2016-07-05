@@ -2,7 +2,7 @@
   * Created by anicolaspp on 7/3/16.
   */
 
-package com.nico.simulation.actors.cluster
+package com.nico.simulation.actors.cluster.publisher
 
 import akka.actor._
 import akka.cluster.pubsub.DistributedPubSub
@@ -25,7 +25,7 @@ class TransactionPublisher(accounts: List[String]) extends Actor with ActorLoggi
 
       val selectedAccount = accounts(Math.abs(Random.nextInt()) % accounts.length)
 
-      mediator ! Publish(selectedAccount, genTransaction)
+      mediator ! Publish(selectedAccount, genTransaction, true)
 
       log.info(selectedAccount)
   }

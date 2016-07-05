@@ -1,7 +1,7 @@
 /**
   * Created by anicolaspp on 7/4/16.
   */
-package com.nico.simulation.actors.cluster
+package com.nico.simulation.actors.cluster.publisher
 
 import akka.actor.ActorSystem
 import com.typesafe.config.ConfigFactory

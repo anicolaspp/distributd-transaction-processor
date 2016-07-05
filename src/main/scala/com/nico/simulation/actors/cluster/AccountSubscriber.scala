@@ -15,7 +15,7 @@ class AccountSubscriber(account: String) extends Actor with ActorLogging {
   val manager = context.actorOf(TransactionManagerActor.props(account), account + ".ActorManager")
   val mediator = DistributedPubSub(context.system).mediator
 
-  mediator ! Subscribe(account, self)
+  mediator ! Subscribe(account, Some(account), self)
 
   log.debug("AccountSubscriber started")
 
