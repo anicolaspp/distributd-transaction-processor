@@ -21,4 +21,4 @@ build.sbt
 project/
 src/main/java/
 src/main/scala-2.11/
-src/test/
+
