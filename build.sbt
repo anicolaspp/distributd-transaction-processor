@@ -28,3 +28,6 @@ libraryDependencies ++= Seq(
   "org.aspectj" % "aspectjweaver" % "1.8.5"
 )
 
+enablePlugins(JavaServerAppPackaging)
+
+mainClass in Compile := Some("com.nico.simulation.persistence.app")

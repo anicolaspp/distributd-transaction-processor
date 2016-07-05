@@ -1,3 +1,3 @@
 logLevel := Level.Warn
 
-//addSbtPlugin("com.artima.supersafe" % "sbtplugin" % "1.1.0-RC6")
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.1.1")
