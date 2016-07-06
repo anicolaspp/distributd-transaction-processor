@@ -5,9 +5,8 @@
 package com.nico.simulation.actors.cluster.publisher
 
 import akka.actor._
-import akka.cluster.pubsub.DistributedPubSub
-import akka.cluster.pubsub.DistributedPubSubMediator.Publish
-import com.nico.actors.TransactionManagerActor.{Deposit, Extract, Transaction}
+import com.nico.persistence.Transaction
+import org.joda.time.DateTime
 
 import scala.util.Random
 
@@ -17,35 +16,22 @@ class TickerTransactionPublisher(accounts: List[String]) extends Actor with Acto
 
   import scala.concurrent.duration._
 
-  val mediator = DistributedPubSub(context.system).mediator
   val ticks = context.system.scheduler.schedule(1 seconds, 500 milliseconds, self, "ticks")
+
+  val publisher = context.actorOf(TransactionPublisher.props(), "actor-publisher")
 
   override def receive: Actor.Receive = {
     case "ticks"        =>
 
       val selectedAccount = accounts(Math.abs(Random.nextInt()) % accounts.length)
+      val transaction = Transaction(selectedAccount, Random.nextInt(100), DateTime.now())
 
-      mediator ! Publish(selectedAccount, genTransaction, true)
+      publisher ! transaction
 
-      log.info(selectedAccount)
-  }
-
-  def genTransaction: Transaction = {
-    val transactionAmount = Random.nextInt() % 100
-
-    if (transactionAmount > 0) {
-      Deposit(transactionAmount)
-    }
-    else {
-      Extract(Math.abs(transactionAmount))
-    }
+      log.info(s"Transaction published: $transaction")
   }
 }
 
 object TickerTransactionPublisher {
   def props(accounts: List[String]) = Props(new TickerTransactionPublisher(accounts))
 }
-
-
-
-
