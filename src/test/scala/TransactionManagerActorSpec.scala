@@ -8,10 +8,12 @@ package tests
 import java.io.File
 
 import akka.actor.ActorSystem
+import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.testkit.{ImplicitSender, TestKit}
 import com.nico.actors.TransactionManagerActor._
+import com.nico.http.ApiResources
 import com.nico.persistence.Account
-import org.scalatest.{BeforeAndAfterAll, FlatSpecLike}
+import org.scalatest.{Matchers, FlatSpec, BeforeAndAfterAll, FlatSpecLike}
 import scala.util.Random
 
 class TransactionManagerActorSpec extends TestKit(ActorSystem("FlatSpec"))
@@ -95,4 +97,8 @@ class TransactionManagerActorSpec extends TestKit(ActorSystem("FlatSpec"))
     afterEach(accId)
   }
 }
+
+
+
+
 
