@@ -8,15 +8,15 @@ package test
 import com.nico.persistence.{Account, InMemoryAccountStorage}
 import org.scalatest.{Matchers, FlatSpec}
 
-class InMemoryAccountStorageSpec extends FlatSpec with Matchers {
+class InMemoryAccountStorageSpec extends FlatSpec with Matchers with InMemoryAccountStorage {
   it should "init with a balance" in {
-    val storage = InMemoryAccountStorage().storage
+    val storage = this.storage
 
     storage.get("101") should be (Account("101", 0))
   }
 
   it should "update" in {
-    val storage = InMemoryAccountStorage().storage
+    val storage = this.storage
 
     val account = storage.update(Account("101", 100))
 
@@ -27,9 +27,9 @@ class InMemoryAccountStorageSpec extends FlatSpec with Matchers {
   }
 
   it should "manage multi accounts" in {
-    val storage = InMemoryAccountStorage().storage
+    val storage = this.storage
 
-    (1 to 100) map { i =>
+    (1 to 100) foreach { i =>
       if (i % 2 == 0) {
         storage.update(Account(i.toString, 100))
       }
