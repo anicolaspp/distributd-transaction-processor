@@ -1,6 +1,10 @@
 /**
   * Created by anicolaspp on 7/6/16.
   */
+
+package com.nico
+package test
+
 import com.nico.persistence.{Account, InMemoryAccountStorage}
 import org.scalatest.{Matchers, FlatSpec}
 
