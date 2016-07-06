@@ -5,7 +5,7 @@
 package com.nico.persistence
 
 
-trait JournalComponent { this: PathProviderComponent =>
+trait JournalModule { this: PathProviderComponent =>
 
   trait Journal {
     def add(transaction: Transaction): String
