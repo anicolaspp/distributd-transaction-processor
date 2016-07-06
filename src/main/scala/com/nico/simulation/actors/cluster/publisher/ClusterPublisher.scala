@@ -20,7 +20,7 @@ object ClusterPublisher {
     val numberOfAccounts = args(0).toInt
     val accounts = (0 to numberOfAccounts).map (_.toString)
 
-    system.actorOf(TransactionPublisher.props(accounts.toList))
+    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
 
     readLine()
   }

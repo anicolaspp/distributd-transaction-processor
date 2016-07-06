@@ -1,51 +1,31 @@
 /**
-  * Created by anicolaspp on 7/3/16.
+  * Created by nperez on 7/6/16.
   */
 
 package com.nico.simulation.actors.cluster.publisher
 
-import akka.actor._
+import akka.actor.{Props, ActorLogging, Actor}
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.Publish
-import com.nico.actors.TransactionManagerActor.{Deposit, Extract, Transaction}
+import com.nico.actors.TransactionManagerActor.{Extract, Deposit}
+import com.nico.persistence.Transaction
 
-import scala.util.Random
 
-
-class TransactionPublisher(accounts: List[String]) extends Actor with ActorLogging {
-  import context.dispatcher
-
-  import scala.concurrent.duration._
+class TransactionPublisher extends Actor with ActorLogging {
 
   val mediator = DistributedPubSub(context.system).mediator
-  val ticks = context.system.scheduler.schedule(1 seconds, 500 milliseconds, self, "ticks")
 
   override def receive: Actor.Receive = {
-    case "ticks"        =>
 
-      val selectedAccount = accounts(Math.abs(Random.nextInt()) % accounts.length)
-
-      mediator ! Publish(selectedAccount, genTransaction, true)
-
-      log.info(selectedAccount)
-  }
-
-  def genTransaction: Transaction = {
-    val transactionAmount = Random.nextInt() % 100
-
-    if (transactionAmount > 0) {
-      Deposit(transactionAmount)
+    case Transaction(accId, amount, stamp) => if (amount > 0) {
+      mediator ! Publish(accId, Deposit(amount), sendOneMessageToEachGroup = true)
     }
     else {
-      Extract(Math.abs(transactionAmount))
+      mediator ! Publish(accId, Extract(Math.abs(amount)), sendOneMessageToEachGroup = true)
     }
   }
 }
 
 object TransactionPublisher {
-  def props(accounts: List[String]) = Props(new TransactionPublisher(accounts))
+  def props() = Props(new TransactionPublisher)
 }
-
-
-
-
