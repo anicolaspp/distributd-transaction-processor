@@ -5,12 +5,10 @@
 package com.nico
 package test
 
-import akka.http.scaladsl.server.RouteResult.Rejected
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.nico.http.{ApiReportResources, ApiTransactionResources}
 import com.nico.persistence.Account
-import org.scalatest.{Matchers, FlatSpec}
-import akka.http.scaladsl.model.StatusCodes._
+import org.scalatest.{FlatSpec, Matchers}
 
 class ApiRouteSpec extends FlatSpec with Matchers with ScalatestRouteTest with
   ApiTransactionResources with

@@ -8,19 +8,11 @@ package tests
 import java.io.File
 
 import akka.actor.ActorSystem
-
-import akka.cluster.pubsub.DistributedPubSub
-import akka.cluster.pubsub.DistributedPubSubMediator.{SubscribeAck, Subscribe}
-
-import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.testkit.{ImplicitSender, TestKit}
 import com.nico.actors.TransactionManagerActor._
-import com.nico.http.ApiTransactionResources
-import com.nico.persistence.{Transaction, Account}
-import com.nico.simulation.actors.cluster.publisher.TransactionPublisher
-import org.joda.time.DateTime
-import org.scalatest.{Matchers, FlatSpec, BeforeAndAfterAll, FlatSpecLike}
-import scala.sys.Prop
+import com.nico.persistence.Account
+import org.scalatest.{BeforeAndAfterAll, FlatSpecLike}
+
 import scala.util.Random
 
 class TransactionManagerActorSpec extends TestKit(ActorSystem("FlatSpec"))
