@@ -108,8 +108,6 @@ trait InMemoryAccountStorage extends AccountStorage {
 
     var accounts = Map[String, Account]()
 
-    var storedAccount = Account("100", 200)
-
     def newAccountWithId(accountId: String): Account = {
       accounts = accounts + (accountId -> Account(accountId, 0))
 
