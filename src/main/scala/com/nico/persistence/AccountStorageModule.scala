@@ -132,5 +132,3 @@ trait InMemoryAccountStorage extends AccountStorage {
 object InMemoryAccountStorage {
   def apply(): InMemoryAccountStorage = new InMemoryAccountStorage {}
 }
-
-
