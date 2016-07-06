@@ -16,7 +16,9 @@ import com.typesafe.config.ConfigFactory
 
 import scala.io.StdIn
 
-object RestApi extends App with ApiTransactionResources {
+object RestApi extends App
+  with ApiTransactionResources
+  with ApiReportResources {
 
   val configuration = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=9070")
     .withFallback(ConfigFactory.parseString("akka.cluster.roles=[api]"))
@@ -25,7 +27,7 @@ object RestApi extends App with ApiTransactionResources {
   implicit val system = ActorSystem("TransactionCluster", configuration)
   implicit val materializer = ActorMaterializer()
 
-  val api = transactionRoutes
+  val api = transactionRoutes ~ reportRoutes
 
   val binding = Http().bindAndHandle(api, "localhost", 9071)
 

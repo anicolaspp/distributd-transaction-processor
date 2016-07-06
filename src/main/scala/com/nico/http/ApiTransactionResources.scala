@@ -4,7 +4,9 @@
 
 package com.nico.http
 
+import akka.http.javadsl.server.Route
 import akka.http.scaladsl.server.Directives
+import com.nico.persistence.Account
 
 trait ApiTransactionResources extends Directives {
 
@@ -22,5 +24,17 @@ trait ApiTransactionResources extends Directives {
         complete("This is a nice get")
       }
     }
+  }
+}
+
+trait ApiReportResources extends Directives {
+
+  def reportRoutes = pathPrefix("accounts") {
+    parameters('account.as[String]) { acc =>
+      get {
+        complete(Account(acc, 0).toString)
+      }
+    }
+
   }
 }
