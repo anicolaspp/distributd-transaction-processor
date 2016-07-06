@@ -28,6 +28,15 @@ libraryDependencies ++= Seq(
   "org.aspectj" % "aspectjweaver" % "1.8.5"
 )
 
-enablePlugins(JavaServerAppPackaging)
+dockerBaseImage := "java"
+enablePlugins(JavaAppPackaging)
 
-mainClass in Compile := Some("com.nico.simulation.persistence.app")
+//mainClass in Compile := Some("com.nico.simulation.persistence.app")
+
+
+aspectjSettings
+
+javaOptions <++= AspectjKeys.weaverOptions in Aspectj
+
+// when you call "sbt run" aspectj weaving kicks in
+fork in run := true

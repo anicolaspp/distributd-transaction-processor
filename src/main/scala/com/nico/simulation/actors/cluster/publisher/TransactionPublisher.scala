@@ -18,7 +18,7 @@ class TransactionPublisher(accounts: List[String]) extends Actor with ActorLoggi
   import scala.concurrent.duration._
 
   val mediator = DistributedPubSub(context.system).mediator
-  val ticks = context.system.scheduler.schedule(1 seconds, 100 milliseconds, self, "ticks")
+  val ticks = context.system.scheduler.schedule(1 seconds, 500 milliseconds, self, "ticks")
 
   override def receive: Actor.Receive = {
     case "ticks"        =>

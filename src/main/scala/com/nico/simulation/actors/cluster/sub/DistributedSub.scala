@@ -7,9 +7,13 @@ package com.nico.simulation.actors.cluster.sub
 import akka.actor.ActorSystem
 import com.nico.simulation.actors.cluster.AccountSubscriber
 import com.typesafe.config.ConfigFactory
+import kamon.Kamon
 
 object DistributedSub {
   def main(args: Array[String]) {
+
+    Kamon.start()
+
     val port = args(1).toInt
 
     val configuration = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port")

@@ -97,3 +97,7 @@ class TransactionManagerActorSpec extends TestKit(ActorSystem("FlatSpec"))
 }
 
 
+
+class P {
+  val a = AClass
+}
