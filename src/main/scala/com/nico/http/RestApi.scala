@@ -15,7 +15,7 @@ import com.nico.persistence.Transaction
 
 import scala.io.StdIn
 
-object RestApi extends App with ApiResources {
+object RestApi extends App with ApiTransactionResources {
   //override val transactionPublisher: TransactionPublisher = _
 
   implicit val system = ActorSystem()
@@ -30,24 +30,6 @@ object RestApi extends App with ApiResources {
 //  binding.flatMap(_.unbind())
 }
 
-trait ApiResources extends Directives {
 
-  //val transactionPublisher: TransactionPublisher
-
-  def transactionRoutes = pathPrefix("transactions") {
-    pathEnd {
-//      post {
-//        entity(as[Transaction]) { transaction =>
-//
-//          complete((StatusCodes.Accepted, "Transaction posted"))
-//        }
-//      } ~
-      get {
-        complete("This is a nice get")
-      }
-
-    }
-  }
-}
 
 

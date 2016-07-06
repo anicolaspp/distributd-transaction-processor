@@ -11,7 +11,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.testkit.{ImplicitSender, TestKit}
 import com.nico.actors.TransactionManagerActor._
-import com.nico.http.ApiResources
+import com.nico.http.ApiTransactionResources
 import com.nico.persistence.Account
 import org.scalatest.{Matchers, FlatSpec, BeforeAndAfterAll, FlatSpecLike}
 import scala.util.Random

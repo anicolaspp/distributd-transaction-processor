@@ -5,15 +5,24 @@
 package com.nico
 package test
 
+import akka.http.scaladsl.server.RouteResult.Rejected
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import com.nico.http.ApiResources
+import com.nico.http.ApiTransactionResources
 import org.scalatest.{Matchers, FlatSpec}
+import akka.http.scaladsl.model.StatusCodes._
 
-class ApiRouteSpec extends FlatSpec with Matchers with ScalatestRouteTest with ApiResources {
+class ApiRouteSpec extends FlatSpec with Matchers with ScalatestRouteTest with ApiTransactionResources {
   it should "return a greeting for GET" in {
 
     Get("/transactions") ~> transactionRoutes ~> check {
       responseAs[String] should be ("This is a nice get")
+    }
+  }
+
+  it should "not return a greeting for GET on wrong path" in {
+
+    Get("/transactions/abc") ~> transactionRoutes ~> check{
+      handled should be (false)
     }
   }
 }
