@@ -2,10 +2,7 @@
   * Created by anicolaspp on 7/2/16.
   */
 
-package com.nico.persistence
-package test
-
-
+import com.nico.persistence.InMemoryTransactionManager
 import org.scalatest.{FlatSpec, Matchers}
 
 class AccountManagerSpec extends FlatSpec with Matchers {

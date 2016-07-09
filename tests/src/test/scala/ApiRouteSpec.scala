@@ -2,9 +2,6 @@
   * Created by nperez on 7/6/16.
   */
 
-package com.nico
-package test
-
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.nico.http.{ApiReportResources, ApiTransactionResources}
 import com.nico.persistence.Account

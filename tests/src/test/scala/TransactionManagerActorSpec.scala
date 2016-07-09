@@ -2,13 +2,11 @@
   * Created by anicolaspp on 7/3/16.
   */
 
-package com.nico.actors
-package tests
-
 import java.io.File
 
 import akka.actor.ActorSystem
 import akka.testkit.{ImplicitSender, TestKit}
+import com.nico.actors.TransactionManagerActor
 import com.nico.actors.TransactionManagerActor._
 import com.nico.persistence.Account
 import org.scalatest.{BeforeAndAfterAll, FlatSpecLike}

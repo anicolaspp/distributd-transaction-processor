@@ -2,21 +2,15 @@
   * Created by anicolaspp on 7/3/16.
   */
 
-package com.nico.simulation.actors.cluster
+package com.nico.simulation.actors.cluster.singleton
 
 import akka.actor._
-import akka.cluster.pubsub.DistributedPubSub
-import akka.cluster.pubsub.DistributedPubSubMediator.{Publish, Subscribe}
 import akka.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerSettings}
-import akka.event.LoggingReceive
-import com.nico.actors.TransactionManagerActor
-import com.nico.actors.TransactionManagerActor.{Transaction, Extract, Deposit}
+import com.nico.simulation.actors.cluster.BankManager
 import com.typesafe.config.ConfigFactory
 
-import scala.util.Random
 
-
-object Cluster {
+object ClusterSingleton {
   def main(args: Array[String]) {
 
     val port = args(1).toInt
@@ -34,7 +28,6 @@ object Cluster {
       terminationMessage = PoisonPill,
       settings = ClusterSingletonManagerSettings(system)
     ))
-
 
     readLine()
   }

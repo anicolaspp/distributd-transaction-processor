@@ -2,9 +2,6 @@
   * Created by nperez on 7/6/16.
   */
 
-package com.nico
-package test
-
 import akka.actor.ActorSystem
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.{Subscribe, SubscribeAck}
@@ -13,7 +10,7 @@ import com.nico.actors.TransactionManagerActor.{Deposit, Extract}
 import com.nico.persistence.Transaction
 import com.nico.simulation.actors.cluster.publisher.TransactionPublisher
 import org.joda.time.DateTime
-import org.scalatest.{BeforeAndAfterAll, Matchers, FlatSpecLike}
+import org.scalatest.{BeforeAndAfterAll, FlatSpecLike, Matchers}
 
 class ClusterPublisherSpec extends TestKit(ActorSystem("pubsub"))
   with FlatSpecLike
