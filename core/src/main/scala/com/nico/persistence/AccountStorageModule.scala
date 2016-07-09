@@ -5,10 +5,7 @@
 package com.nico.persistence
 
 import java.io.{File, PrintWriter}
-import java.nio.file.{Paths, Files}
-
 import org.joda.time.DateTime
-
 import scala.io.Source
 import scala.util.Try
 
@@ -132,3 +129,4 @@ trait InMemoryAccountStorage extends AccountStorage {
 object InMemoryAccountStorage {
   def apply(): InMemoryAccountStorage = new InMemoryAccountStorage {}
 }
+

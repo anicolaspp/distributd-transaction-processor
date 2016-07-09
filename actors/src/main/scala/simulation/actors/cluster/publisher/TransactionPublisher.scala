@@ -17,11 +17,17 @@ class TransactionPublisher extends Actor with ActorLogging {
 
   override def receive: Actor.Receive = {
 
-    case Transaction(accId, amount, stamp) => if (amount > 0) {
-      mediator ! Publish(accId, Deposit(amount), sendOneMessageToEachGroup = true)
-    }
-    else {
-      mediator ! Publish(accId, Extract(Math.abs(amount)), sendOneMessageToEachGroup = true)
+
+
+    case t @ Transaction(accId, amount, stamp) => {
+      log.debug(s"Transaction Received: $t")
+
+      if (amount > 0) {
+        mediator ! Publish(accId, Deposit(amount), sendOneMessageToEachGroup = true)
+      }
+      else {
+        mediator ! Publish(accId, Extract(Math.abs(amount)), sendOneMessageToEachGroup = true)
+      }
     }
   }
 }
