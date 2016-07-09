@@ -2,12 +2,12 @@
   * Created by anicolaspp on 7/2/16.
   */
 
-import com.nico.persistence.InMemoryTransactionManager
+import com.nico.persistence.TransactionManager
 import org.scalatest.{FlatSpec, Matchers}
 
 class AccountManagerSpec extends FlatSpec with Matchers {
   "Account Manager" should "get account info" in {
-    val manager =  new InMemoryTransactionManager("100").manager
+    val manager =  TransactionManager.inMemory("100").manager
 
     manager.deposit(200)
 
@@ -18,7 +18,7 @@ class AccountManagerSpec extends FlatSpec with Matchers {
   }
 
   it should "deposit" in {
-    val manager = new InMemoryTransactionManager("100").manager
+    val manager = TransactionManager.inMemory("100").manager
 
     val account = manager.deposit(10)
 
@@ -27,7 +27,7 @@ class AccountManagerSpec extends FlatSpec with Matchers {
   }
 
   it should "successfully extract" in {
-    val manager = new InMemoryTransactionManager("100").manager
+    val manager = TransactionManager.inMemory("100").manager
 
     manager.deposit(200)
 
@@ -39,7 +39,7 @@ class AccountManagerSpec extends FlatSpec with Matchers {
   }
 
   it should "not extract if low balance" in {
-    val manager = new InMemoryTransactionManager("100").manager
+    val manager = TransactionManager.inMemory("100").manager
 
     val (result, account) = manager.extract(500)
 

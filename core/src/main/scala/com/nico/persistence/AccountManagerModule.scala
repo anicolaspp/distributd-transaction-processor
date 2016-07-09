@@ -4,28 +4,19 @@
 
 package com.nico.persistence
 
-trait AccountManagerComponent {
+trait AccountManagerComponent { this: StorageComponent =>
   val manager: AccountManager
 
   trait AccountManager {
     def accountInfo: Account
-    
-    def deposit(amount: Double): Account
 
-    def extract(amount: Double): (Boolean, Account)
-  }
-}
-
-class TransactionManager (account: String) extends AccountManagerComponent{
-  this: AccountStorage  =>
-  override val manager = new AccountManager {
-    override def deposit(amount: Double): Account = {
+    def deposit(amount: Double): Account = {
       val account = accountInfo
 
       storage.update(Account(account.id, account.balance + amount))
     }
 
-    override def extract(amount: Double): (Boolean, Account) = {
+    def extract(amount: Double): (Boolean, Account) = {
       val account = accountInfo
 
       if (account.balance < amount) {
@@ -35,16 +26,29 @@ class TransactionManager (account: String) extends AccountManagerComponent{
         (true, storage.update(Account(account.id, account.balance - amount)))
       }
     }
-
-    override def accountInfo: Account = storage.get(account)
-  }
-  override val pathProvider = new PathProvider {
-    override def path: String = "/Users/anicolaspp/accounts/"
   }
 }
 
 
-class InMemoryTransactionManager(acc: String) extends TransactionManager(acc) with InMemoryAccountStorage
+trait TransactionManager extends AccountManagerComponent with StorageComponent with PathProviderComponent
+
+object TransactionManager {
+
+  def onDisk(account: String, root: String): TransactionManager = new TransactionManager with AccountStorage {
+    override val pathProvider: PathProvider = new PathProvider {
+      override def path: String = root
+    }
+    override val manager: AccountManager = new AccountManager {
+        override def accountInfo: Account = storage.get(account)
+      }
+  }
+
+  def inMemory(account: String): TransactionManager = new TransactionManager with InMemoryAccountStorage {
+    override val manager: AccountManager = new AccountManager {
+      override def accountInfo: Account = storage.get(account)
+    }
+  }
+}
 
 
 

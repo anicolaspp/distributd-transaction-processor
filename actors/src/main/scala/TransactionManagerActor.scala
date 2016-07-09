@@ -3,30 +3,26 @@
   */
 package com.nico.actors
 
-import akka.actor.{ActorLogging, Props, Actor}
-import akka.actor.Actor.Receive
-import akka.event.LoggingReceive
+import akka.actor.{Actor, ActorLogging, Props}
 import com.nico.actors.TransactionManagerActor._
-import com.nico.persistence.{Account, AccountStorage, TransactionManager}
+import com.nico.persistence.{Account, TransactionManager}
 
-class TransactionManagerActor(account: String) extends Actor with ActorLogging {
-
-  val manager = (new TransactionManager(account) with AccountStorage).manager
+class TransactionManagerActor(transactionManager: TransactionManager) extends Actor with ActorLogging {
 
 
   override def receive: Receive = {
-    case AccountInfo()    =>  sender() ! AccountInfoResult(manager.accountInfo)
+    case AccountInfo()    =>  sender() ! AccountInfoResult(transactionManager.manager.accountInfo)
 
     case Deposit(amount)  =>  {
-      log.debug("deposit: " + account)
+      log.debug("deposit: " + transactionManager.manager.accountInfo.id)
 
-      sender() ! AccountInfoResult(manager.deposit(amount))
+      sender() ! AccountInfoResult(transactionManager.manager.deposit(amount))
     }
 
     case Extract(amount)  =>  {
-      log.debug("extract: " + account)
+      log.debug("extract: " + transactionManager.manager.accountInfo.id)
 
-      val (result, acc) = manager.extract(amount)
+      val (result, acc) = transactionManager.manager.extract(amount)
 
       sender() ! ExtractResult(result, acc)
     }
@@ -34,7 +30,7 @@ class TransactionManagerActor(account: String) extends Actor with ActorLogging {
 }
 
 object TransactionManagerActor {
-  def props(account: String): Props = Props(new TransactionManagerActor(account))
+  def props(transactionManager: TransactionManager): Props = Props(new TransactionManagerActor(transactionManager))
 
   trait Transaction
 

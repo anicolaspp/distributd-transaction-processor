@@ -10,6 +10,7 @@ import akka.cluster.pubsub.DistributedPubSubMediator.Subscribe
 import akka.cluster.singleton.{ClusterSingletonManagerSettings, ClusterSingletonManager}
 import com.nico.actors.TransactionManagerActor
 import com.nico.actors.TransactionManagerActor._
+import com.nico.persistence.TransactionManager
 import com.nico.simulation.actors.Driver.Start
 import com.typesafe.config.ConfigFactory
 import org.joda.time.{DateTime, Period, PeriodType}
@@ -23,7 +24,7 @@ object SingleAccountSimulator {
 
     val numberOfTransactions = args(0).toInt
     val accId = Random.nextInt(100).toString
-    val manager = actorySystem.actorOf(TransactionManagerActor.props(accId))
+    val manager = actorySystem.actorOf(TransactionManagerActor.props(TransactionManager.onDisk(accId, "/Users/anicolaspp/accounts")))
 
     val driver = actorySystem.actorOf(Driver.props(manager, numberOfTransactions), "driver")
 

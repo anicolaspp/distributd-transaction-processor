@@ -100,7 +100,17 @@ trait AccountStorage extends StorageComponent with PathProviderComponent {
     }
 }
 
-trait InMemoryAccountStorage extends AccountStorage {
+
+object AccountStorage {
+  def apply(storageLocation: String): AccountStorage = new AccountStorage {
+    override val pathProvider: PathProvider = new PathProvider {
+      override def path: String = storageLocation
+    }
+  }
+}
+
+
+trait InMemoryAccountStorage extends StorageComponent with PathProviderComponent {
   override val storage: Storage = new Storage {
 
     var accounts = Map[String, Account]()
@@ -129,4 +139,3 @@ trait InMemoryAccountStorage extends AccountStorage {
 object InMemoryAccountStorage {
   def apply(): InMemoryAccountStorage = new InMemoryAccountStorage {}
 }
-

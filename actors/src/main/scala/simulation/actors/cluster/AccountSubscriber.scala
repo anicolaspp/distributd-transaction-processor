@@ -9,10 +9,14 @@ import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.Subscribe
 import akka.event.LoggingReceive
 import com.nico.actors.TransactionManagerActor
+import com.nico.persistence.TransactionManager
 
 
-class AccountSubscriber(account: String) extends Actor with ActorLogging {
-  val manager = context.actorOf(TransactionManagerActor.props(account), account + ".ActorManager")
+class AccountSubscriber(transactionManager: TransactionManager) extends Actor with ActorLogging {
+
+  val account = transactionManager.manager.accountInfo.id
+
+  val manager = context.actorOf(TransactionManagerActor.props(transactionManager), account + ".ActorManager")
   val mediator = DistributedPubSub(context.system).mediator
 
   mediator ! Subscribe(account, Some(account), self)
@@ -29,5 +33,5 @@ class AccountSubscriber(account: String) extends Actor with ActorLogging {
 
 
 object AccountSubscriber {
-  def props(account: String) = Props(new AccountSubscriber(account))
+  def props(transactionManager: TransactionManager) = Props(new AccountSubscriber(transactionManager))
 }

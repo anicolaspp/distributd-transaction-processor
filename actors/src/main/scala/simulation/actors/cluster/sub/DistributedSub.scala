@@ -5,6 +5,7 @@
 package com.nico.simulation.actors.cluster.sub
 
 import akka.actor.ActorSystem
+import com.nico.persistence.{TransactionManager, Transaction}
 import com.nico.simulation.actors.cluster.AccountSubscriber
 import com.typesafe.config.ConfigFactory
 import kamon.Kamon
@@ -26,7 +27,7 @@ object DistributedSub {
     val accounts = (0 to numberOfAccounts).map (_.toString).toSet
 
     (0 to 100).map { i =>
-      system.actorOf(AccountSubscriber.props((i % numberOfAccounts).toString))
+      system.actorOf(AccountSubscriber.props(TransactionManager.onDisk((i % numberOfAccounts).toString, "/Users/anicolaspp/accounts")))
     }
 
     readLine()
