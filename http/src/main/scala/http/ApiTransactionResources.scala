@@ -31,7 +31,6 @@ trait ApiReportResources extends Directives {
         complete(Account(acc, 0).toString)
       }
     }
-
   }
 }
 

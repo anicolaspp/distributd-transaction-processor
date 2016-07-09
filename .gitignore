@@ -19,6 +19,6 @@ project/plugins/project/
 .idea/
 build.sbt
 project/
-src/main/java/
-src/main/scala-2.11/
+core/src/main/java/
+core/src/main/scala-2.11/
 
