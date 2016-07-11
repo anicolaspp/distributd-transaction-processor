@@ -1,19 +1,17 @@
-package com.nico.simulation.actors.cluster
-
-import akka.actor.{Props, ActorLogging, Actor}
-import com.nico.persistence.{TransactionManager, Transaction}
-
 /**
   * Created by anicolaspp on 7/4/16.
   */
+package com.nico.actors
 
+import akka.actor.{Actor, ActorLogging, Props}
+import com.nico.persistence.TransactionManager
 
 class BankManager(accounts: List[String]) extends Actor with ActorLogging {
 
   val subscribers = Init()
 
   def Init() = {
-    log.debug("BankManager started")
+    log.debug("com.nico.actors.BankManager started")
     accounts.map(acc => context.actorOf(AccountSubscriber.props(TransactionManager.onDisk(acc, "/Users/anicolaspp/accounts"))))
   }
 

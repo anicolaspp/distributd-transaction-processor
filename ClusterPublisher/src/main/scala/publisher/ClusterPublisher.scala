@@ -1,16 +1,17 @@
 /**
   * Created by anicolaspp on 7/4/16.
   */
-package com.nico.simulation.actors.cluster.publisher
+package com.nico.ClusterPublisher
 
 import akka.actor.ActorSystem
+import com.nico.actors.TransactionPublisher
 import com.nico.persistence.Transaction
 import com.typesafe.config.ConfigFactory
 import org.joda.time.DateTime
 
 import scala.util.Random
 
-object ClusterPublisher {
+object ClusterPublisherApp {
   def main(args: Array[String]) {
 
     val port = args(1)

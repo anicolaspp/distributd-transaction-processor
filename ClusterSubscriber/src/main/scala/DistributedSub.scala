@@ -1,19 +1,22 @@
 /**
-  * Created by anicolaspp on 7/3/16.
+  * Created by anicolaspp on 7/4/16.
   */
 
-package com.nico.simulation.actors.cluster.singleton
+package com.nico.DistributedSubscriber
 
-import akka.actor._
-import akka.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerSettings}
-import com.nico.simulation.actors.cluster.BankManager
+import akka.actor.ActorSystem
+import com.nico.actors.AccountSubscriber
+import com.nico.persistence.TransactionManager
 import com.typesafe.config.ConfigFactory
+import kamon.Kamon
 
-
-object ClusterSingleton {
+object DistributedSubscriberApp {
   def main(args: Array[String]) {
 
+    Kamon.start()
+
     val port = args(1).toInt
+
     val configuration = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port")
       .withFallback(ConfigFactory.parseString("akka.cluster.roles=[banker]"))
       .withFallback(ConfigFactory.load())
@@ -23,21 +26,10 @@ object ClusterSingleton {
     val numberOfAccounts = args(0).toInt
     val accounts = (0 to numberOfAccounts).map (_.toString).toSet
 
-    system.actorOf(ClusterSingletonManager.props(
-      singletonProps = BankManager.props(accounts.toList),
-      terminationMessage = PoisonPill,
-      settings = ClusterSingletonManagerSettings(system)
-    ))
+    (0 to 100).map { i =>
+      system.actorOf(AccountSubscriber.props(TransactionManager.onDisk((i % numberOfAccounts).toString, "/Users/anicolaspp/accounts")))
+    }
 
     readLine()
   }
 }
-
-
-
-
-
-
-
-
-

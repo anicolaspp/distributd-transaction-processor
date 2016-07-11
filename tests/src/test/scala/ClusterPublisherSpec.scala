@@ -7,8 +7,8 @@ import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.{Subscribe, SubscribeAck}
 import akka.testkit.{ImplicitSender, TestKit}
 import com.nico.actors.TransactionManagerActor.{Deposit, Extract}
+import com.nico.actors.TransactionPublisher
 import com.nico.persistence.Transaction
-import com.nico.simulation.actors.cluster.publisher.TransactionPublisher
 import org.joda.time.DateTime
 import org.scalatest.{BeforeAndAfterAll, FlatSpecLike, Matchers}
 

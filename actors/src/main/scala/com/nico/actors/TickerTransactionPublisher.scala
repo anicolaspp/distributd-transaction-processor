@@ -2,7 +2,7 @@
   * Created by anicolaspp on 7/3/16.
   */
 
-package com.nico.simulation.actors.cluster.publisher
+package com.nico.actors
 
 import akka.actor._
 import com.nico.persistence.Transaction

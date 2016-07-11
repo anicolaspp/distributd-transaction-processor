@@ -2,12 +2,12 @@
   * Created by nperez on 7/6/16.
   */
 
-package com.nico.simulation.actors.cluster.publisher
+package com.nico.actors
 
-import akka.actor.{Props, ActorLogging, Actor}
+import akka.actor.{Actor, ActorLogging, Props}
 import akka.cluster.pubsub.DistributedPubSub
 import akka.cluster.pubsub.DistributedPubSubMediator.Publish
-import com.nico.actors.TransactionManagerActor.{Extract, Deposit}
+import com.nico.actors.TransactionManagerActor.{Deposit, Extract}
 import com.nico.persistence.Transaction
 
 
