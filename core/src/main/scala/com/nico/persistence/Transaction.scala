@@ -9,4 +9,3 @@ import org.joda.time.DateTime
 
 case class Transaction(accountId: String, amount: Double, stamp: DateTime)
 
-
