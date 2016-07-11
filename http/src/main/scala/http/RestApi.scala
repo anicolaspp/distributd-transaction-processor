@@ -29,6 +29,10 @@ object RestApi extends App
 
   StdIn.readLine()
 
+  while (true) {
+
+  }
+
 //  binding.flatMap(_.unbind())
 }
 

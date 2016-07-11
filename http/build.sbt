@@ -9,11 +9,23 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-testkit" % akkaVersion,
   "com.typesafe.akka" %% "akka-http-core" % akkaVersion,
   "com.typesafe.akka" %% "akka-http-experimental" % akkaVersion,
-  "com.typesafe.akka" %% "akka-http-testkit" % akkaVersion
+  "com.typesafe.akka" %% "akka-http-testkit" % akkaVersion,
+  "com.typesafe.akka" %% "akka-cluster" % akkaVersion,
+  "com.typesafe.akka" % "akka-cluster-metrics_2.11" % akkaVersion
 )
 
 enablePlugins(JavaServerAppPackaging)
-enablePlugins(DockerComposePlugin)
+//enablePlugins(DockerComposePlugin)
 
-mappings in Universal ++= contentOf("src/main/resources")
+
+
+
+maintainer := "Nicolas A Perez <anicolaspp@gmail.com>"
+
+dockerExposedPorts in Docker := Seq(1600)
+
+dockerEntrypoint in Docker := Seq("sh", "-c", "CLUSTER_IP=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1 }'` bin/clustering $*")
+
+//dockerRepository := Some("mhamrah")
+
 
