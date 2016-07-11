@@ -20,7 +20,7 @@ object RestApi extends App
 
   val configuration = getConfiguration(args(0).toInt)
 
-  implicit val system = ActorSystem("TransactionCluster", configuration)
+  implicit val system: ActorSystem = ActorSystem("TransactionCluster", configuration)
   implicit val materializer = ActorMaterializer()
 
   val api = transactionRoutes ~ reportRoutes
@@ -29,11 +29,7 @@ object RestApi extends App
 
   StdIn.readLine()
 
-  while (true) {
-
-  }
-
-//  binding.flatMap(_.unbind())
+  binding.map(_.unbind()).map(_ => system.terminate())
 }
 
 

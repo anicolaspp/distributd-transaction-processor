@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
 )
 
 enablePlugins(JavaServerAppPackaging)
-//enablePlugins(DockerComposePlugin)
+enablePlugins(DockerComposePlugin)
 
 
 
