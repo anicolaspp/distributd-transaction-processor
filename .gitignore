@@ -17,7 +17,6 @@ project/plugins/project/
 .worksheet
 
 .idea/
-build.sbt
 project/
 core/src/main/java/
 core/src/main/scala-2.11/
