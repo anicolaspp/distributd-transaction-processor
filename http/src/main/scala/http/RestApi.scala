@@ -29,7 +29,7 @@ object RestApi extends App
 
   StdIn.readLine()
 
-  binding.map(_.unbind()).map(_ => system.terminate())
+  //binding.map(_.unbind()).map(_ => system.terminate())
 }
 
 

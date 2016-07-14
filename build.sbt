@@ -27,3 +27,6 @@ lazy val http = project.in(file("http")) dependsOn core
 lazy val core = project.in(file("core"))
 
 
+//addCommandAlias("deploySubscribers", ";clusterSubscriber/compile;clusterSubscriber/run")
+
+

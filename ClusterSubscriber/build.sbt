@@ -1,4 +1,4 @@
-name := "cluster-subscriber"
+name := "subscriber"
 
 val akkaVersion = "2.4.7"
 val kamonVersion = "0.6.0"
@@ -23,7 +23,6 @@ libraryDependencies ++= Seq(
 
 dockerBaseImage := "java"
 enablePlugins(JavaAppPackaging)
-
 enablePlugins(DockerComposePlugin)
 
 dockerImageCreationTask := (publishLocal in Docker).value
@@ -37,3 +36,20 @@ javaOptions <++= AspectjKeys.weaverOptions in Aspectj
 
 // when you call "sbt run" aspectj weaving kicks in
 fork in run := true
+
+
+mainClass in (Compile, run) := Some("com.nico.DistributedSubscriber.DistributedSubscriberApp")
+
+parallelExecution in myRun := true
+
+lazy val myRun = inputKey[Unit]("custom run")
+
+myRun := Def.inputTaskDyn {
+  val args = Def.spaceDelimited("").parsed.toList.reverse
+
+  val values = args.mkString(" ")
+
+  (run in Compile).toTask(" com.nico.DistributedSubscriber.DistributedSubscriberApp 9080 10")
+  (run in Compile).toTask(" com.nico.DistributedSubscriber.DistributedSubscriberApp 9081 10")
+}.evaluated
+
