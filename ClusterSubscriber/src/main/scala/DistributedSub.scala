@@ -15,8 +15,6 @@ object DistributedSubscriberApp {
 
     //Kamon.start()
 
-    args foreach println
-
     val port = args(1).toInt
 
     println(port)
@@ -31,7 +29,7 @@ object DistributedSubscriberApp {
     val accounts = (0 to numberOfAccounts).map (_.toString).toSet
 
     (0 to 100).map { i =>
-      system.actorOf(AccountSubscriber.props(TransactionManager.onDisk((i % numberOfAccounts).toString, "/Users/anicolaspp/accounts")))
+      system.actorOf(AccountSubscriber.props(TransactionManager.onDisk((i % numberOfAccounts).toString, "/Users/nperez/accounts")))
     }
 
     readLine()

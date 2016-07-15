@@ -5,7 +5,7 @@ version in Global := "1.0"
 scalaVersion in Global := "2.11.8"
 
 
-lazy val processor = project.in(file("."))
+lazy val runner = project.in(file("ClusterRunner"))
   .aggregate (
     core,
     http,
@@ -15,6 +15,8 @@ lazy val processor = project.in(file("."))
     clusterSubscriber,
     clusterSingleton
   )
+
+
 
 
 lazy val clusterSingleton = project.in(file("ClusterSingleton")) dependsOn(core, actors)

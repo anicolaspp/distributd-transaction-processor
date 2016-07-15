@@ -37,3 +37,5 @@ javaOptions <++= AspectjKeys.weaverOptions in Aspectj
 
 // when you call "sbt run" aspectj weaving kicks in
 fork in run := true
+
+mainClass in (Compile, run) := Some("com.nico.ClusterPublisher.ClusterPublisherApp")

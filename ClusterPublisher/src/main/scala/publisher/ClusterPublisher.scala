@@ -4,11 +4,12 @@
 package com.nico.ClusterPublisher
 
 import akka.actor.ActorSystem
-import com.nico.actors.TransactionPublisher
+import com.nico.actors.{TickerTransactionPublisher, TransactionPublisher}
 import com.nico.persistence.Transaction
 import com.typesafe.config.ConfigFactory
 import org.joda.time.DateTime
 
+import scala.io.Source
 import scala.util.Random
 
 object ClusterPublisherApp {
@@ -24,6 +25,12 @@ object ClusterPublisherApp {
 
     val numberOfAccounts = args(0).toInt
     val accounts = (0 to numberOfAccounts).map (_.toString)
+
+
+
+
+//    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
+
 
     val numberOfTransactions = args(2).toInt
 
@@ -43,10 +50,5 @@ object ClusterPublisherApp {
 
       println(s"iteration $i transaction $transaction")
     }
-
-
-//    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
-
-    readLine()
   }
 }
