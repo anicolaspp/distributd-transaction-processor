@@ -2,7 +2,7 @@
   * Created by anicolaspp on 7/6/16.
   */
 
-import com.nico.persistence.{Account, InMemoryAccountStorage}
+import com.nico.persistence.{JournalAccountStorage, Account, InMemoryAccountStorage}
 import org.scalatest.{FlatSpec, Matchers}
 
 class InMemoryAccountStorageSpec extends FlatSpec with Matchers with InMemoryAccountStorage {
