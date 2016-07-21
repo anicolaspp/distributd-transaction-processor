@@ -15,6 +15,15 @@ lazy val runner = project.in(file("ClusterRunner"))
     clusterSubscriber,
     clusterSingleton
   )
+  .dependsOn (
+    core,
+    http,
+    tests,
+    actors,
+    clusterPublisher,
+    clusterSubscriber,
+    clusterSingleton
+  )
 
 
 
@@ -28,6 +37,10 @@ lazy val tests = project.in(file("tests")) dependsOn(core, http, actors)
 lazy val http = project.in(file("http")) dependsOn core
 lazy val core = project.in(file("core"))
 
+
+Keys.fork in run := true
+
+parallelExecution in test := false
 
 //addCommandAlias("deploySubscribers", ";clusterSubscriber/compile;clusterSubscriber/run")
 

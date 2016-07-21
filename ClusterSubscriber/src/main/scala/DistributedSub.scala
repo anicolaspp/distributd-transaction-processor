@@ -13,7 +13,7 @@ import kamon.Kamon
 object DistributedSubscriberApp {
   def main(args: Array[String]) {
 
-    //Kamon.start()
+    Kamon.start()
 
     val port = args(1).toInt
 

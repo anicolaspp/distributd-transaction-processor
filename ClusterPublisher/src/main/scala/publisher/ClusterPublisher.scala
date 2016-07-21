@@ -7,6 +7,7 @@ import akka.actor.ActorSystem
 import com.nico.actors.{TickerTransactionPublisher, TransactionPublisher}
 import com.nico.persistence.Transaction
 import com.typesafe.config.ConfigFactory
+import kamon.Kamon
 import org.joda.time.DateTime
 
 import scala.io.Source
@@ -14,6 +15,9 @@ import scala.util.Random
 
 object ClusterPublisherApp {
   def main(args: Array[String]) {
+
+    Kamon.start()
+
 
     val port = args(1)
 
@@ -29,26 +33,26 @@ object ClusterPublisherApp {
 
 
 
-//    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
+    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
 
-
-    val numberOfTransactions = args(2).toInt
-
-
-    val publisher = system.actorOf(TransactionPublisher.props())
-
-    println("number of transactions: " + numberOfTransactions)
-
-
-    (1 to numberOfTransactions) foreach {i =>
-
-      val selectedAccount = Random.nextInt() % numberOfAccounts
-
-      val transaction = Transaction(selectedAccount.toString, Random.nextInt(100), DateTime.now())
-
-      publisher ! transaction
-
-      println(s"iteration $i transaction $transaction")
-    }
+//
+//    val numberOfTransactions = args(2).toInt
+//
+//
+//    val publisher = system.actorOf(TransactionPublisher.props())
+//
+//    println("number of transactions: " + numberOfTransactions)
+//
+//
+//    (1 to numberOfTransactions) foreach {i =>
+//
+//      val selectedAccount = Random.nextInt() % numberOfAccounts
+//
+//      val transaction = Transaction(selectedAccount.toString, Random.nextInt(100), DateTime.now())
+//
+//      publisher ! transaction
+//
+//      println(s"iteration $i transaction $transaction")
+//    }
   }
 }
