@@ -4,6 +4,8 @@
 
 package com.nico.persistence
 
+import com.nico.persistence.storage.PathProviderComponent
+
 
 trait JournalModule { this: PathProviderComponent =>
 

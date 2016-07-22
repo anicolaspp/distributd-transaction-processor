@@ -2,33 +2,16 @@
   * Created by anicolaspp on 7/2/16.
   */
 
-package com.nico.persistence
+package com.nico.persistence.storage
 
 import java.io.{File, PrintWriter}
+
+import cats.data.Writer
+import com.nico.persistence.Account
 import org.joda.time.DateTime
+
 import scala.io.Source
 import scala.util.Try
-
-
-trait PathProviderComponent {
-  val pathProvider: PathProvider
-
-  trait PathProvider {
-    def path: String
-  }
-}
-
-trait StorageComponent { this: PathProviderComponent =>
-
-  val storage: Storage
-
-  trait Storage {
-    def update(account: Account): Account
-
-    def get(accountId: String): Account
-  }
-}
-
 
 trait AccountStorage extends StorageComponent with PathProviderComponent {
   override val storage: Storage = new Storage {
@@ -86,7 +69,6 @@ trait AccountStorage extends StorageComponent with PathProviderComponent {
             val dir = new File(f.getPath + ".history")
             dir.mkdir()
 
-
             f
           }
         )
@@ -100,7 +82,6 @@ trait AccountStorage extends StorageComponent with PathProviderComponent {
     }
 }
 
-
 object AccountStorage {
   def apply(storageLocation: String): AccountStorage = new AccountStorage {
     override val pathProvider: PathProvider = new PathProvider {
@@ -110,32 +91,6 @@ object AccountStorage {
 }
 
 
-trait InMemoryAccountStorage extends StorageComponent with PathProviderComponent {
-  override val storage: Storage = new Storage {
 
-    var accounts = Map[String, Account]()
 
-    def newAccountWithId(accountId: String): Account = {
-      accounts = accounts + (accountId -> Account(accountId, 0))
 
-      accounts(accountId)
-    }
-
-    override def get(accountId: String): Account =
-      accounts.get(accountId).fold(newAccountWithId(accountId))(x => x)
-
-    override def update(account: Account): Account = {
-      accounts = accounts.updated(account.id, account)
-
-      account
-    }
-  }
-
-  override val pathProvider: PathProvider = new PathProvider {
-    override def path: String = "/"
-  }
-}
-
-object InMemoryAccountStorage {
-  def apply(): InMemoryAccountStorage = new InMemoryAccountStorage {}
-}
