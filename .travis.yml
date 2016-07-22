@@ -7,7 +7,7 @@ jdk:
   - oraclejdk8
 
 script:
-  - sbt compile test coverageReport
+  - sbt compile coverage test coverageReport
 
 after_success:
   - pip install --user codecov && codecov
