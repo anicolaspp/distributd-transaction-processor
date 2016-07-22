@@ -8,3 +8,6 @@ jdk:
 
 script:
   - sbt compile test coverageReport
+
+after_success:
+  - pip install --user codecov && codecov
