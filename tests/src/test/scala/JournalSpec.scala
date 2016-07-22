@@ -75,7 +75,7 @@ class JournalSpec extends FlatSpec
 
     val zippedHistory = s.zipWithIndex
 
-    zippedHistory.forall{
+    zippedHistory.forall {
       case (acc, i) =>  acc.balance == i
     } should be (true)
   }
