@@ -2,7 +2,8 @@
   * Created by anicolaspp on 7/6/16.
   */
 
-import com.nico.persistence.{Account, JournalAccountStorage}
+import com.nico.persistence.Account
+import com.nico.persistence.storage.JournalAccountStorage
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 
 

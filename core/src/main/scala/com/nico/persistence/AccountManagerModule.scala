@@ -4,6 +4,8 @@
 
 package com.nico.persistence
 
+import com.nico.persistence.storage.{InMemoryAccountStorage, AccountStorage, StorageComponent, PathProviderComponent}
+
 trait AccountManagerComponent { this: StorageComponent =>
   val manager: AccountManager
 
