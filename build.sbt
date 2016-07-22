@@ -42,6 +42,8 @@ Keys.fork in run := true
 
 parallelExecution in test := false
 
+coverageEnabled := true
+
 //addCommandAlias("deploySubscribers", ";clusterSubscriber/compile;clusterSubscriber/run")
 
 
