@@ -17,6 +17,8 @@ object DistributedSubscriberApp {
 
     val port = args(1).toInt
 
+    println(port)
+
     val configuration = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port")
       .withFallback(ConfigFactory.parseString("akka.cluster.roles=[banker]"))
       .withFallback(ConfigFactory.load())
@@ -27,7 +29,7 @@ object DistributedSubscriberApp {
     val accounts = (0 to numberOfAccounts).map (_.toString).toSet
 
     (0 to 100).map { i =>
-      system.actorOf(AccountSubscriber.props(TransactionManager.onDisk((i % numberOfAccounts).toString, "/Users/anicolaspp/accounts")))
+      system.actorOf(AccountSubscriber.props(TransactionManager.onDisk((i % numberOfAccounts).toString, "/Users/nperez/accounts")))
     }
 
     readLine()
