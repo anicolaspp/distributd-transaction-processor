@@ -1,19 +1,22 @@
 version: '2'
 
 services:
-  http1:
-    image: http:1.0
-    command: >
-      9090 1600
+  seed:
+    image: subscriber:1.0
     ports:
-      - "1600:1600"
-      - "9090:9090"
+      - '1600:1600'
 
-#  http2:
-#      image: http:1.0
-#      command: >
-#        9092 9075
-#      ports:
-#        - "8081:9075"
-#
-#      links: ["http1:akkaseed"]
+    environment:
+      CLUSTER_PORT: 1600
+      CLUSTER_IP: seed
+      SEED_PORT_1600_TCP_ADDR: seed
+
+  publisher:
+    image: cluster-publisher:1.0
+    ports:
+      - '1601:1601'
+
+    environment:
+      CLUSTER_PORT: 1601
+      CLUSTER_IP: publisher
+      SEED_PORT_1600_TCP_ADDR: seed

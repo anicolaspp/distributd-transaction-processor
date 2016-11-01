@@ -22,8 +22,6 @@ enablePlugins(DockerComposePlugin)
 
 maintainer := "Nicolas A Perez <anicolaspp@gmail.com>"
 
-dockerExposedPorts in Docker := Seq(1600, 9090)
-
 dockerEntrypoint in Docker := Seq("sh", "-c", "CLUSTER_IP=`/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1 }'` bin/clustering $*")
 
 

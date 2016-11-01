@@ -21,15 +21,11 @@ libraryDependencies ++= Seq(
   "org.aspectj" % "aspectjweaver" % "1.8.5"
 )
 
-dockerBaseImage := "java"
 enablePlugins(JavaAppPackaging)
 
 enablePlugins(DockerComposePlugin)
 
 dockerImageCreationTask := (publishLocal in Docker).value
-
-//mainClass in Compile := Some("com.nico.simulation.persistence.app")
-
 
 aspectjSettings
 

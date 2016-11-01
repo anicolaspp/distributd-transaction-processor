@@ -4,26 +4,19 @@
 package com.nico.ClusterPublisher
 
 import akka.actor.ActorSystem
-import com.nico.ClusterPublisher.MOption.{OptionEmpty, MSome}
-import com.nico.actors.{TickerTransactionPublisher, TransactionPublisher}
-import com.nico.persistence.Transaction
+import com.nico.actors.TickerTransactionPublisher
 import com.typesafe.config.ConfigFactory
-import org.joda.time.DateTime
-
-import scala.util.Random
 
 object ClusterPublisherApp {
   def main(args: Array[String]) {
 
-    val port = args(1)
+//    val port = args(1)
 
-    val configuration = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port")
-      .withFallback(ConfigFactory.parseString("akka.cluster.roles=[publisher]"))
-      .withFallback(ConfigFactory.load())
+    val configuration = ConfigFactory.load()
 
-    val system = ActorSystem("TransactionCluster", configuration)
+    val system = ActorSystem(configuration.getString("clustering.cluster.name"), configuration)
 
-    val numberOfAccounts = args(0).toInt
+    val numberOfAccounts = configuration.getInt("accounts.total")
     val accounts = (0 to numberOfAccounts).map (_.toString)
 
 //    val numberOfTransactions = args(2).toInt
@@ -46,7 +39,7 @@ object ClusterPublisherApp {
 //    }
 
 
-    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
+//    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
 
     readLine()
   }
