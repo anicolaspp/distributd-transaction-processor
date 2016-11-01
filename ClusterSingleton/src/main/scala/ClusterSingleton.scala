@@ -5,7 +5,9 @@
 package com.nico.ClusterSingleton
 
 import akka.actor._
+import akka.cluster.routing.{ClusterRouterGroupSettings, ClusterRouterGroup}
 import akka.cluster.singleton.{ClusterSingletonManager, ClusterSingletonManagerSettings}
+import akka.routing.{ConsistentHashingGroup, RoundRobinGroup}
 import com.nico.actors.BankManager
 import com.typesafe.config.ConfigFactory
 

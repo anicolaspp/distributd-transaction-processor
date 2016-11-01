@@ -4,7 +4,8 @@
 package com.nico.ClusterPublisher
 
 import akka.actor.ActorSystem
-import com.nico.actors.TransactionPublisher
+import com.nico.ClusterPublisher.MOption.{OptionEmpty, MSome}
+import com.nico.actors.{TickerTransactionPublisher, TransactionPublisher}
 import com.nico.persistence.Transaction
 import com.typesafe.config.ConfigFactory
 import org.joda.time.DateTime
@@ -25,27 +26,27 @@ object ClusterPublisherApp {
     val numberOfAccounts = args(0).toInt
     val accounts = (0 to numberOfAccounts).map (_.toString)
 
-    val numberOfTransactions = args(2).toInt
+//    val numberOfTransactions = args(2).toInt
 
 
-    val publisher = system.actorOf(TransactionPublisher.props())
+//    val publisher = system.actorOf(TransactionPublisher.props())
 
-    println("number of transactions: " + numberOfTransactions)
+//    println("number of transactions: " + numberOfTransactions)
+
+//
+//    (1 to numberOfTransactions) foreach {i =>
+//
+//      val selectedAccount = Random.nextInt() % numberOfAccounts
+//
+//      val transaction = Transaction(selectedAccount.toString, Random.nextInt(100), DateTime.now())
+//
+//      publisher ! transaction
+//
+//      println(s"iteration $i transaction $transaction")
+//    }
 
 
-    (1 to numberOfTransactions) foreach {i =>
-
-      val selectedAccount = Random.nextInt() % numberOfAccounts
-
-      val transaction = Transaction(selectedAccount.toString, Random.nextInt(100), DateTime.now())
-
-      publisher ! transaction
-
-      println(s"iteration $i transaction $transaction")
-    }
-
-
-//    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
+    system.actorOf(TickerTransactionPublisher.props(accounts.toList))
 
     readLine()
   }

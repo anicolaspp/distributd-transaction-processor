@@ -16,7 +16,7 @@ class TickerTransactionPublisher(accounts: List[String]) extends Actor with Acto
 
   import scala.concurrent.duration._
 
-  val ticks = context.system.scheduler.schedule(1 seconds, 1 milliseconds, self, "ticks")
+  val ticks = context.system.scheduler.schedule(1 seconds, 500 milliseconds, self, "ticks")
 
   val publisher = context.actorOf(TransactionPublisher.props(), "actor-publisher")
 

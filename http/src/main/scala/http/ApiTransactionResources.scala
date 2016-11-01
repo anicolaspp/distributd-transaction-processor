@@ -8,7 +8,10 @@ import akka.http.javadsl.server.Route
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives
 import com.nico.persistence.Account
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{ConfigValueFactory, ConfigFactory}
+
+import scala.util.Try
+
 
 trait ApiTransactionResources extends Directives {
 
@@ -32,11 +35,4 @@ trait ApiReportResources extends Directives {
       }
     }
   }
-}
-
-trait ApiConfigurationLoader {
-
-  def getConfiguration(bindingPort: Int) = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$bindingPort")
-    .withFallback(ConfigFactory.parseString("akka.cluster.roles=[api]"))
-    .withFallback(ConfigFactory.load())
 }
